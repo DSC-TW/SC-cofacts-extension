@@ -2,5 +2,12 @@
     "name": "confact extension",
     "description" : "Solution Challenge",
     "version": "1.0",
-    "manifest_version": 2
+    "manifest_version": 2,
+    "permissions": [
+      "contextMenus"
+    ],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": true
+    }
   }
