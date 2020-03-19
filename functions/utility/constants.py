@@ -1,3 +1,5 @@
+url = "https://cofacts-api.g0v.tw/graphql"
+
 headers = {
     "Connection": "keep-alive",
     "accept": "*/*",
@@ -13,4 +15,20 @@ headers = {
     "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8"
 }
 
-url = "https://cofacts-api.g0v.tw/graphql"
+replies_data  = {
+        'operationName': 'ListReplies', 
+        'variables': { 
+            'filter': { 
+                'moreLikeThis': { 
+                    'like': 'N/A', 
+                    'minimumShouldMatch': '0' 
+                    } 
+                }, 
+        'orderBy': [{ 
+            '_score': 'DESC' 
+            },{ 
+            'createdAt': 'DESC' 
+            }]
+        }, 
+        'query': 'query ListReplies($filter: ListReplyFilter, $orderBy: [ListReplyOrderBy], $before: String, $after: String) { ListReplies(filter: $filter, orderBy: $orderBy, before: $before, after: $after, first: 10) { edges { node {  ...ReplyItem  __typename } cursor __typename } __typename } }  fragment ReplyItem on Reply { id text type createdAt user { id name __typename } articleReplies(status: NORMAL) { articleId replyId __typename } __typename } ' 
+    }
