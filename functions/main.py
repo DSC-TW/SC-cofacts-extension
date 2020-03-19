@@ -2,7 +2,7 @@ import json
 import requests
 from utility.constants import headers,url
 
-def get_replies_from_api(title):
+def _get_replies_from_api(title):
     print("title:" + title)
     data  = {
         'operationName': 'ListReplies', 
@@ -34,9 +34,9 @@ def get_replies_from_api(title):
         print('\033[33m Success! \033[0m')
         json_data = json.loads(r.text)
         json_data = json_data['data']['ListReplies']['edges']
-        return {'status': r.status_code, 'content':replies_data_process(json_data)}
+        return {'status': r.status_code, 'content':_replies_data_process(json_data)}
 
-def replies_data_process(json_data):
+def _replies_data_process(json_data):
     data = json_data
     output = []
     for reply in data:
@@ -56,7 +56,7 @@ def get_replies(request):
     elif request.method == 'POST':
         my_json = request.data.decode('utf8').replace("'", '"')
         data = json.loads(my_json)
-        return str(get_replies_from_api(data['title']))
+        return str(_get_replies_from_api(data['title']))
     else:
         return abort(403)
 
