@@ -43,13 +43,19 @@ def get_list_from_api(title):
     }
     data_data['variables']['filter']['moreLikeThis']['like'] = title
     data = json.dumps(data_data)
+    # data = json.dumps({"query":data_data})
+    # data = json.load(data)
+    # print(str(data))
     try:
         r = requests.post("https://cofacts-api.g0v.tw/graphql", headers=headers, data=data)
         r.encoding = 'utf8'
         print(str(r))
+        # print(str(r.text))
+        soup = BeautifulSoup(r.text, 'html.parser')
+        # print(soup)
     except:
         print('\033[33m Error! \033[0m')
-        return 'error'
+        return 'no'
     else:
         print('\033[33m Success! \033[0m')
         json_data = json.loads(r.text)
@@ -58,6 +64,7 @@ def get_list_from_api(title):
         return data_process(json_data)
 
 def data_process(json_data):
+    # data = json.loads(json_data)
     data = json_data
     output = []
     for i in data:
@@ -67,6 +74,8 @@ def data_process(json_data):
         createdTime = i['node']['createdAt']
         output.append({"text": text, "text_type": text_type, "creator": creator, "createdTime": createdTime})
     return output
+
+# print(get_list_from_api("酒精"))
 
 # functions-framework --target=hello_method
 # curl -X POST -H "Content-Type: application/json" -d '{"title" : "tttt"}' localhost:8080
@@ -82,9 +91,7 @@ def hello_method(request):
         data = json.loads(my_json)
         print(data['title'])
         output = get_list_from_api(data['title'])
-        if output == 'error':
-            return abort(500)
-        else:
-            return str(output)
+        # print(output)
+        return str(output)
     else:
         return abort(403)
