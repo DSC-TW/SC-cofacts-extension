@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 def hello(data):
     backtext = 'Hello world!\ndata:' + str(data) + '\n'
     print(data)
-    # print(context)
     return backtext
 
 def get_list_from_api(title):
@@ -68,8 +67,7 @@ def data_process(json_data):
         output.append({"text": text, "text_type": text_type, "creator": creator, "createdTime": createdTime})
     return output
 
-# functions-framework --target=hello_method
-# curl -X POST -H "Content-Type: application/json" -d '{"title" : "tttt"}' localhost:8080
+# curl -X POST -H "Content-Type: application/json" -d '{"title" : "test"}' localhost:8080
 def hello_method(request):
     from flask import abort
 
@@ -77,10 +75,8 @@ def hello_method(request):
         output = 'You can try using POST method!'
         return output
     elif request.method == 'POST':
-        print(request.data)
         my_json = request.data.decode('utf8').replace("'", '"')
         data = json.loads(my_json)
-        print(data['title'])
         output = get_list_from_api(data['title'])
         if output == 'error':
             return abort(500)
