@@ -12,3 +12,5 @@ headers = {
     "Referer": "https://cofacts.g0v.tw/",
     "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8"
 }
+
+url = "https://cofacts-api.g0v.tw/graphql"

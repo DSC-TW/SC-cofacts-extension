@@ -1,6 +1,6 @@
 import json
 import requests
-from utility.constants import headers
+from utility.constants import headers,url
 
 def get_replies_from_api(title):
     print("title:" + title)
@@ -24,7 +24,6 @@ def get_replies_from_api(title):
     data['variables']['filter']['moreLikeThis']['like'] = title
     data = json.dumps(data)
     try:
-        url = "https://cofacts-api.g0v.tw/graphql"
         r = requests.post(url, headers=headers, data=data)
         r.encoding = 'utf8'
         print(r.status_code)
