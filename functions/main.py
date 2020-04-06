@@ -1,6 +1,7 @@
 import json
 import requests
 from utility.constants import url,headers,replies_data
+from flask import abort, request
 
 def _get_replies_from_api(title):
     print("title:" + title)
@@ -31,7 +32,7 @@ def _replies_data_process(json_data):
     return output
 
 def get_replies(request):
-    from flask import abort
+    
 
     if request.method == 'POST':
         my_json = request.data.decode('utf8').replace("'", '"')
