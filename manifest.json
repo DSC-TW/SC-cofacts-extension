@@ -5,7 +5,9 @@
     "manifest_version": 2,
     "permissions": [
       "contextMenus",
-      "activeTab"
+      "activeTab",
+      "https://www.dcard.tw/*",
+      "http://localhost/*"
     ],
     "background": {
       "scripts": ["background.js"],

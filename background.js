@@ -10,6 +10,10 @@ function genericOnClick(info, tab) {
         "現在hover的連結：" + (info.linkUrl ? info.linkUrl : "") + "\n" +  
         "現在hover的frame是：" + (info.frameUrl ? info.frameUrl : "") + "\n"  
     );  
+    fetch('http://localhost:5000/get1?name=alan').then(r => r.text()).then(result => {
+    // Result now contains the response text, do what you want...
+        console.log(result)
+    })
 }  
 
 function checkableClick(info, tab) {  
