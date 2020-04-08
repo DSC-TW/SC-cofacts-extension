@@ -6,7 +6,7 @@ from flask import abort, request
 
 app = Flask(__name__)
 
-def _get_replies_from_api(title):
+def _post_replies_from_api(title):
     print("title:" + title)
     replies_data['variables']['filter']['moreLikeThis']['like'] = title
     data = json.dumps(replies_data)
@@ -34,19 +34,18 @@ def _replies_data_process(json_data):
         output.append({"text": text, "text_type": text_type, "creator": creator, "createdTime": createdTime})
     return output
 
-@app.route('/', methods=['POST'])
-def get_replies():
+@app.route('/get_replies', methods=['POST'])
+def post_replies():
     try:
         data = request.get_json()
     except:
         content = {
-            "code": 406,
-            "status": "NOT_ACCEPTABLE",
+            "status": 406,
             "message": "No given data",
         }
         return content, 406
     else:
-        return str(_get_replies_from_api(data['title'])), 200
+        return str(_post_replies_from_api(data['title'])), 200
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=4040, debug=True)
+    app.run(host='127.0.0.1', port=4040, debug=False)
