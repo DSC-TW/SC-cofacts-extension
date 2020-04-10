@@ -7,7 +7,8 @@
       "contextMenus",
       "activeTab",
       "https://www.dcard.tw/*",
-      "http://localhost/*"
+      "http://localhost/*",
+      "storage"
     ],
     "background": {
       "scripts": ["background.js"],
