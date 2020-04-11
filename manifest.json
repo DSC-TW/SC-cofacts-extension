@@ -8,7 +8,8 @@
       "activeTab",
       "https://www.dcard.tw/*",
       "http://localhost/*",
-      "storage"
+      "storage",
+      "notifications"
     ],
     "background": {
       "scripts": ["background.js"],
