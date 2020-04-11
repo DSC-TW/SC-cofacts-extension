@@ -1,9 +1,12 @@
 import json
+from flask import Flask, request
 import requests
 from utility.constants import url,headers,replies_data
 from flask import abort, request
 
-def _get_replies_from_api(title):
+app = Flask(__name__)
+
+def _post_replies_from_api(title):
     print("title:" + title)
     replies_data['variables']['filter']['moreLikeThis']['like'] = title
     data = json.dumps(replies_data)
@@ -31,15 +34,18 @@ def _replies_data_process(json_data):
         output.append({"text": text, "text_type": text_type, "creator": creator, "createdTime": createdTime})
     return output
 
-def get_replies(request):
-    
-
-    if request.method == 'POST':
-        my_json = request.data.decode('utf8').replace("'", '"')
-        data = json.loads(my_json)
-        return str(_get_replies_from_api(data['title']))
+@app.route('/get_replies', methods=['POST'])
+def post_replies():
+    try:
+        data = request.get_json()
+    except:
+        content = {
+            "status": 406,
+            "message": "No given data",
+        }
+        return content, 406
     else:
-        return abort(403)
+        return str(_post_replies_from_api(data['title'])), 200
 
 if __name__ == "__main__":
-    get_replies(request)
+    app.run(host='127.0.0.1', port=4040, debug=False)
