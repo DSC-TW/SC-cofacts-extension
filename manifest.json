@@ -5,7 +5,11 @@
     "manifest_version": 2,
     "permissions": [
       "contextMenus",
-      "activeTab"
+      "activeTab",
+      "http://localhost/*",
+      "https://us-central1-sc-cofacts.cloudfunctions.net/*",
+      "storage",
+      "notifications"
     ],
     "background": {
       "scripts": ["background.js"],
