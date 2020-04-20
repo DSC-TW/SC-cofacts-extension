@@ -14,4 +14,3 @@ chrome.storage.sync.get('msg',(response)=>{
     document.getElementById("output").innerHTML =response.msg
 });
 
-

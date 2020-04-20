@@ -12,15 +12,14 @@ function genericOnClick(info, tab) {
     );
     
     // 把下面網址換掉
-    /*
-    fetch('http://localhost:4004/',{title:"hello"}).then(r => r.text()).then(result => {
+    
+    fetch('https://us-central1-sc-cofacts.cloudfunctions.net/get_replies', 
+    {method: 'POST',body: JSON.stringify({"title":info.selectionText})}).then(r => r.text()).then(result => {
      //Result now contains the response text, do what you want...
         console.log(result)
+         //回傳結果用這存
+        chrome.storage.sync.set({msg:result });
     })
-    */
-    //回傳結果用這存
-    chrome.storage.sync.set({msg:"回傳結果" });
-    
 }
 
 function checkableClick(info, tab) {

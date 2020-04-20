@@ -6,8 +6,8 @@
     "permissions": [
       "contextMenus",
       "activeTab",
-      "https://www.dcard.tw/*",
       "http://localhost/*",
+      "https://us-central1-sc-cofacts.cloudfunctions.net/*",
       "storage",
       "notifications"
     ],
