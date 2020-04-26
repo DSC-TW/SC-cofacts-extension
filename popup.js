@@ -6,11 +6,15 @@ chrome.tabs.executeScript( {
 });
 */
 /*
-setInterval(function() { 
+setInterval(function() {
     //如果沒有點開就有下面塞到這
 },100);
 */
+
+chrome.storage.sync.get('title',(response)=>{    // get title ， 傳遞給 ID SearchInfo
+    document.getElementById("SearchInfo").innerHTML =response.title
+});
+
 chrome.storage.sync.get('msg',(response)=>{
     document.getElementById("output").innerHTML =response.msg
 });
-
