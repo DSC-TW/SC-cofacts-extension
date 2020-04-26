@@ -10,15 +10,21 @@ function genericOnClick(info, tab) {
         "現在hover的連結：" + (info.linkUrl ? info.linkUrl : "") + "\n" +
         "現在hover的frame是：" + (info.frameUrl ? info.frameUrl : "") + "\n"
     );
-    chrome.storage.sync.set({title: "謠言關鍵字搜尋：" +(info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中) 
+    chrome.storage.sync.set({title: "謠言關鍵字搜尋：" +(info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中)
     // 把下面網址換掉
 
     fetch('https://us-central1-sc-cofacts.cloudfunctions.net/get_replies',
     {method: 'POST',body: JSON.stringify({"title":info.selectionText})}).then(r => r.text()).then(result => {
      //Result now contains the response text, do what you want...
-        console.log(result)
+
+        /*console.log(result)
          //回傳結果用這存
-        chrome.storage.sync.set({msg:result });
+        chrome.storage.sync.set({msg:result });*/
+
+        var resultfix = htmlspecialchars(result); //魔改部分
+        console.log(resultfix)
+        StringSplite(resultfix);
+
     })
 }
 
@@ -119,3 +125,51 @@ function createMenus() {
 }
 
 createMenus();
+
+
+/* ------ 新增魔改 ---------*/
+
+function htmlspecialchars(str)   //單引號替換成雙引號 (Json格式)
+   {
+       //str = str.replace(/&/g, '&amp;');
+       //str = str.replace(/</g, '&lt;');
+       //str = str.replace(/>/g, '&gt;');
+       //str = str.replace(/"/g, '\'');
+       str = str.replace(/'/g, '\"');
+       return str;
+   }
+
+
+function StringSplite(resultfix){  //字串分割
+  var member = JSON.parse(resultfix);  //json 分割，存到member
+  var array = [];
+  /*console.log("member.content.length = " + member.content.length);  //測試有多少元素
+  member.content[i].text; //元素內容
+  member.content[i].text_type; //元素真假
+  member.content[i].createdTime; //元素時間 */
+
+ /* 資料存到Array */
+  for (i=0 ; i<member.content.length ;i++){
+    array[i] = [];
+    array[i][0] = member.content[i].text;
+    if(member.content[i].text_type == "NOT_RUMOR"){
+      //console.log(i+"NOT_RUMOR");
+      //array[i][1] = member.content[i].text_type;
+      array[i][1] = "事實";
+    }else if (member.content[i].text_type == "OPINIONATED") {
+      //console.log(i+"OPINIONATED");
+      //array[i][1] = member.content[i].text_type;
+      array[i][1] = "有待商榷";
+    }else if (member.content[i].text_type == "RUMOR") {
+      //console.log(i+"RUMOR");
+      //array[i][1] = member.content[i].text_type;
+      array[i][1] = "謠言";
+    }
+    array[i][2] = member.content[i].createdTime;
+    //chrome.storage.sync.set({bool:"123"}); //真假
+    //chrome.storage.sync.set({time:"123"});
+  }
+
+  chrome.storage.sync.set({msg:array});
+  //console.log("StringSplite Finish");
+}
