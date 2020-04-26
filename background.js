@@ -1,7 +1,7 @@
 chrome.browserAction.onClicked.addListener(function(tab) { alert('icon clicked')});
 function genericOnClick(info, tab) {
-    //根據你點選右鍵的狀況不同，可以得到一些跟內容有關的資訊  
-    //例如 頁面網址，選取的文字，圖片來源，連結的位址  
+    //根據你點選右鍵的狀況不同，可以得到一些跟內容有關的資訊
+    //例如 頁面網址，選取的文字，圖片來源，連結的位址
     console.log(
         "ID是：" + info.menuItemId + "\n" +
         "現在的網址是：" + info.pageUrl + "\n" +
@@ -10,10 +10,10 @@ function genericOnClick(info, tab) {
         "現在hover的連結：" + (info.linkUrl ? info.linkUrl : "") + "\n" +
         "現在hover的frame是：" + (info.frameUrl ? info.frameUrl : "") + "\n"
     );
-    
+
     // 把下面網址換掉
-    
-    fetch('https://us-central1-sc-cofacts.cloudfunctions.net/get_replies', 
+
+    fetch('https://us-central1-sc-cofacts.cloudfunctions.net/get_replies',
     {method: 'POST',body: JSON.stringify({"title":info.selectionText})}).then(r => r.text()).then(result => {
      //Result now contains the response text, do what you want...
         console.log(result)
@@ -23,7 +23,7 @@ function genericOnClick(info, tab) {
 }
 
 function checkableClick(info, tab) {
-    //checkbox 以及 radio 這兩種類型的項目，除了上面的程式碼提到的資訊外，還會用布林值來告訴你使用者點選前，及點選後的狀態。  
+    //checkbox 以及 radio 這兩種類型的項目，除了上面的程式碼提到的資訊外，還會用布林值來告訴你使用者點選前，及點選後的狀態。
     console.log(
         "ID是：" + info.menuItemId + "\n" +
         "現在的網址是：" + info.pageUrl + "\n" +
@@ -38,11 +38,13 @@ function checkableClick(info, tab) {
 
 function createMenus() {
     var parent = chrome.contextMenus.create({
-        "title": "你選擇了%s",
+        "title": "查詢\" %s \"的相關資訊",
+        "type": "normal", //有這句查詢才能正常運作
         "contexts": ['all'],
         "onclick": genericOnClick
     });
 
+    /*
     var normal = chrome.contextMenus.create({
         "title": "通常項目",
         "type": "normal",
@@ -59,7 +61,7 @@ function createMenus() {
         "onclick": checkableClick
     });
 
-    //被separator分隔的radio項目會自動形成一個只能單選的group  
+    //被separator分隔的radio項目會自動形成一個只能單選的group
     var line1 = chrome.contextMenus.create({
         "title": "Child 2",
         "type": "separator",
@@ -81,7 +83,7 @@ function createMenus() {
         "parentId": parent,
         "onclick": checkableClick
     });
-    //被separator分隔的radio項目會自動形成一個只能單選的group  
+    //被separator分隔的radio項目會自動形成一個只能單選的group
     var line2 = chrome.contextMenus.create({
         "title": "Child 2",
         "type": "separator",
@@ -102,18 +104,18 @@ function createMenus() {
         "contexts": ['all'],
         "parentId": parent,
         "onclick": checkableClick
-    });
+    });*/
 
-    // 使用chrome.contextMenus.create的方法回傳值是項目的id  
+    // 使用chrome.contextMenus.create的方法回傳值是項目的id
     console.log(parent);
-    console.log(normal);
+    /*console.log(normal);
     console.log(checkbox);
     console.log(line1);
     console.log(line2);
     console.log(radio1A);
     console.log(radio1B);
     console.log(radio2A);
-    console.log(radio2B);
+    console.log(radio2B);*/
 }
 
-createMenus();  
+createMenus();
