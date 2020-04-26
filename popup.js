@@ -13,11 +13,11 @@ setInterval(function() {
 
 /*此頁面不行用console.log ， 真奇怪*/
 
-chrome.storage.sync.get('title',(response)=>{    // get title ， 傳遞給 ID SearchInfo
+chrome.storage.local.get('title',(response)=>{    // get title ， 傳遞給 ID SearchInfo
     document.getElementById("SearchInfo").innerHTML =response.title
 });
 
-chrome.storage.sync.get('msg',(response)=>{
+chrome.storage.local.get('msg',(response)=>{
     for(i = 0;i<10;i++){
         var words = "此篇報導可信度為 : " + response.msg[i][1]  //謠言或事實
         document.getElementById("TorF"+i).innerHTML = words  //傳到 Html
