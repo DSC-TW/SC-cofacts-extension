@@ -10,7 +10,7 @@ function genericOnClick(info, tab) {
         "現在hover的連結：" + (info.linkUrl ? info.linkUrl : "") + "\n" +
         "現在hover的frame是：" + (info.frameUrl ? info.frameUrl : "") + "\n"
     );
-    chrome.storage.local.set({title: "謠言關鍵字搜尋：" +(info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中)
+    chrome.storage.local.set({title: (info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中)
     // 把下面網址換掉
 
     fetch('https://us-central1-sc-cofacts.cloudfunctions.net/get_replies',
