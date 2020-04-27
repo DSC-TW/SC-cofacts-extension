@@ -3,6 +3,12 @@
     "description" : "Solution Challenge",
     "version": "1.0",
     "manifest_version": 2,
+    "icons": {
+        "24": "images/search24.png",
+        "36": "images/search36.png",
+        "48": "images/search48.png",
+        "128": "images/search128.png"
+      },
     "permissions": [
       "contextMenus",
       "activeTab",
