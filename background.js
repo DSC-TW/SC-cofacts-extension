@@ -2,6 +2,12 @@ chrome.browserAction.onClicked.addListener(function(tab) { alert('icon clicked')
 function genericOnClick(info, tab) {
     //根據你點選右鍵的狀況不同，可以得到一些跟內容有關的資訊
     //例如 頁面網址，選取的文字，圖片來源，連結的位址
+
+    var status = 0;  //設定是否要清除畫面資料的初值(0不用 1要)
+    chrome.storage.local.set({msgstatus:status});
+
+    (info.selectionText ? console.log("文字選取 == true") : cleardata() )
+
     console.log(
         "ID是：" + info.menuItemId + "\n" +
         "現在的網址是：" + info.pageUrl + "\n" +
@@ -22,7 +28,7 @@ function genericOnClick(info, tab) {
         chrome.storage.sync.set({msg:result });*/
 
         var resultfix = htmlspecialchars(result); //魔改部分
-        console.log(resultfix)
+        console.log(resultfix) //resultfix
         StringSplite(resultfix);
 
     })
@@ -172,4 +178,19 @@ function StringSplite(resultfix){  //字串分割
 
   chrome.storage.local.set({msg:array});
   //console.log("StringSplite Finish");
+}
+
+function cleardata(){
+  console.log("文字選取 == false")
+  var array = [];
+  for (i=0 ; i<10 ;i++){
+    array[i] = [];
+    array[i][0] = " "
+    array[i][1] = " "
+    array[i][2] = " "
+  }
+  //console.log("array"+array)
+  chrome.storage.local.set({msgNoSelect:array});
+  var status = 1;  //設定是否要清除畫面資料 (1要)
+  chrome.storage.local.set({msgstatus:status});  //傳遞到popup.js
 }

@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <script src="popup.js"></script>
+        <link rel="stylesheet" type="text/css" href="bouncingLoader.css">
         <title> </title>
         <style>
             body{
@@ -17,62 +18,75 @@
 
 
     <body>
+
         <P id = icon>
           <img src="images/search36.png" style="float: left; margin-right: 10px" >
-          <h1>謠言關鍵字搜尋：</h1>
-          <h2 id = SearchInfo style="padding-top: 5px"></h2>
+          <h1>謠言關鍵字搜尋：</h1> <!--- 大標題 --->
+          <h2 id = SearchInfo style="padding-top: 5px"></h2>  <!--- 關鍵字顯現在這 --->
         </p>
 
-        <P>
-          <h3 id="TorF0"></h3>
-          <div id="article0"></div>
-          <h4 id="time0"></h4>
-        </P>
-        <P>
-          <h3 id="TorF1"></h3>
-          <div id="article1"></div>
-          <h4 id="time1"></h4>
-        </P>
-        <P>
-          <h3 id="TorF2"></h3>
-          <div id="article2"></div>
-          <h4 id="time2"></h4>
-        </P>
-        <P>
-          <h3 id="TorF3"></h3>
-          <div id="article3"></div>
-          <h4 id="time3"></h4>
-        </P>
-        <P>
-          <h3 id="TorF4"></h3>
-          <div id="article4"></div>
-          <h4 id="time4"></h4>
-        </P>
-        <P>
-          <h3 id="TorF5"></h3>
-          <div id="article5"></div>
-          <h4 id="time5"></h4>
-        </P>
-        <P>
-          <h3 id="TorF6"></h3>
-          <div id="article6"></div>
-          <h4 id="time6"></h4>
-        </P>
-        <P>
-          <h3 id="TorF7"></h3>
-          <div id="article7"></div>
-          <h4 id="time7"></h4>
-        </P>
-        <P>
-          <h3 id="TorF8"></h3>
-          <div id="article8"></div>
-          <h4 id="time8"></h4>
-        </P>
-        <P>
-          <h3 id="TorF9"></h3>
-          <div id="article9"></div>
-          <h4 id="time9"></h4>
-        </P>
+        <p id = testcol></p> <!--- 測試用column --->
 
+        <div id = LoadingColumn style= " position:absolute; width:400px; height:300px">  <!--- Loading動畫 --->
+          <div class="bouncingLoader" style= "position:absolute; left:57px; top:150px;">
+            <div0></div0>
+            <div1></div1>
+            <div2></div2>
+            <div3></div3>
+          </div>
+        </div>
+
+        <div id = DataColumn>
+          <P>
+            <h3 id="TorF0"></h3>
+            <div id="article0"></div>
+            <h4 id="time0"></h4>
+          </P>
+          <P>
+            <h3 id="TorF1"></h3>
+            <div id="article1"></div>
+            <h4 id="time1"></h4>
+          </P>
+          <P>
+            <h3 id="TorF2"></h3>
+            <div id="article2"></div>
+            <h4 id="time2"></h4>
+          </P>
+          <P>
+            <h3 id="TorF3"></h3>
+            <div id="article3"></div>
+            <h4 id="time3"></h4>
+          </P>
+          <P>
+            <h3 id="TorF4"></h3>
+            <div id="article4"></div>
+            <h4 id="time4"></h4>
+          </P>
+          <P>
+            <h3 id="TorF5"></h3>
+            <div id="article5"></div>
+            <h4 id="time5"></h4>
+          </P>
+          <P>
+            <h3 id="TorF6"></h3>
+            <div id="article6"></div>
+            <h4 id="time6"></h4>
+          </P>
+          <P>
+            <h3 id="TorF7"></h3>
+            <div id="article7"></div>
+            <h4 id="time7"></h4>
+          </P>
+          <P>
+            <h3 id="TorF8"></h3>
+            <div id="article8"></div>
+            <h4 id="time8"></h4>
+          </P>
+          <P>
+            <h3 id="TorF9"></h3>
+            <div id="article9"></div>
+            <h4 id="time9"></h4>
+          </P>
+        </div>
     </body>
 </html>

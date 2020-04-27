@@ -1,0 +1,61 @@
+@keyframes bouncing-loader {
+    to {
+        opacity: 0.8;  /* 淡出 0.1*/
+        transform: translate3d(0, -25px, 0);  /* 0(左右) -16(上下) 0*/
+    }
+}
+
+
+.bouncingLoader > div0 {  /*第一個*/
+    display: inline-block;
+    width: 39px;  /*13 大小*/
+    height: 39px;  /*13*/
+    background: #4285F4;
+    border-radius: 50%;
+    animation: bouncing-loader 0.6s infinite alternate;
+}
+
+.bouncingLoader > div1 {  /*第二個*/
+    display: inline-block;
+    width: 39px;  /*13 大小*/
+    height: 39px;  /*13*/
+    background: #EA4335;
+    border-radius: 50%;
+    animation: bouncing-loader 0.6s infinite alternate;
+}
+
+.bouncingLoader > div2 {  /*第三個*/
+    display: inline-block;
+    width: 39px;  /*13 大小*/
+    height: 39px;  /*13*/
+    background: #FBBC04;
+    border-radius: 50%;
+    animation: bouncing-loader 0.6s infinite alternate;
+}
+
+.bouncingLoader > div3 {  /*第四個*/
+    display: inline-block;
+    width: 39px;  /*13 大小*/
+    height: 39px;  /*13*/
+    background: #34A853;
+    border-radius: 50%;
+    animation: bouncing-loader 0.6s infinite alternate;
+}
+
+.bouncingLoader > div0 ,.bouncingLoader > div1 , .bouncingLoader > div2 , .bouncingLoader > div3{
+    content: " ";
+}
+
+.bouncingLoader > div0 ,.bouncingLoader > div1 , .bouncingLoader > div2 , .bouncingLoader > div3 {
+    margin: 0 15px ;  /* 0 5 */
+}
+
+.bouncingLoader > div1 {
+    animation-delay: 0.2s;
+}
+.bouncingLoader > div2 {
+    animation-delay: 0.3s;
+}
+.bouncingLoader > div3 {
+    animation-delay: 0.4s;
+}
