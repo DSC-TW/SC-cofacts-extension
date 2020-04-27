@@ -13,6 +13,13 @@ setInterval(function() {
 
 /*此頁面不行用console.log ， 真奇怪*/
 
+window.onload = function(){  //剛開啟時，立刻執行
+  var bouncingLoader = document.getElementById("bouncingLoader");
+  var dataColumn = document.getElementById("dataColumn");
+  dataColumn.style.opacity = 1;  //資料欄透明度改為 1，原本 0
+  bouncingLoader.style.opacity = 0;  //Loading動畫透明度改為 0，原本 1
+}
+
 
 chrome.storage.local.get('title',(response)=>{    // get title ， 傳遞給 ID SearchInfo
     document.getElementById("SearchInfo").innerHTML =response.title

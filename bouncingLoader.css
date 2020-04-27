@@ -1,6 +1,6 @@
 @keyframes bouncing-loader {
     to {
-        opacity: 0.8;  /* 淡出 0.1*/
+        opacity: 0.9;  /* 淡出 0.1*/
         transform: translate3d(0, -25px, 0);  /* 0(左右) -16(上下) 0*/
     }
 }
@@ -12,7 +12,7 @@
     height: 39px;  /*13*/
     background: #4285F4;
     border-radius: 50%;
-    animation: bouncing-loader 0.6s infinite alternate;
+    animation: bouncing-loader 0.2s infinite alternate;
 }
 
 .bouncingLoader > div1 {  /*第二個*/
@@ -21,7 +21,7 @@
     height: 39px;  /*13*/
     background: #EA4335;
     border-radius: 50%;
-    animation: bouncing-loader 0.6s infinite alternate;
+    animation: bouncing-loader 0.2s infinite alternate;
 }
 
 .bouncingLoader > div2 {  /*第三個*/
@@ -30,7 +30,7 @@
     height: 39px;  /*13*/
     background: #FBBC04;
     border-radius: 50%;
-    animation: bouncing-loader 0.6s infinite alternate;
+    animation: bouncing-loader 0.2s infinite alternate;
 }
 
 .bouncingLoader > div3 {  /*第四個*/
@@ -39,7 +39,7 @@
     height: 39px;  /*13*/
     background: #34A853;
     border-radius: 50%;
-    animation: bouncing-loader 0.6s infinite alternate;
+    animation: bouncing-loader 0.2s infinite alternate;
 }
 
 .bouncingLoader > div0 ,.bouncingLoader > div1 , .bouncingLoader > div2 , .bouncingLoader > div3{

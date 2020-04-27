@@ -13,6 +13,17 @@
               margin-top: 2px;
               margin-bottom: 2px;
             }
+            .bouncingLoader{   /*Loading動畫*/
+              position:absolute;
+              left:57px;
+              top:150px;
+              opacity: 1;   /*初始透明度為1*/
+              transition: opacity 4s ;  /* 四秒內漸變 */
+            }
+            .dataColumn{  /*資料欄*/
+              opacity: 0;  /*初始透明度為0*/
+              transition: opacity 6s ;  /*六秒內漸變*/
+            }
         </style>
     </head>
 
@@ -25,10 +36,10 @@
           <h2 id = SearchInfo style="padding-top: 5px"></h2>  <!--- 關鍵字顯現在這 --->
         </p>
 
-        <p id = testcol></p> <!--- 測試用column --->
+        <p id = testcol></p> <!--- 測試用column 之後可刪除 --->
 
-        <div id = LoadingColumn style= " position:absolute; width:400px; height:300px">  <!--- Loading動畫 --->
-          <div class="bouncingLoader" style= "position:absolute; left:57px; top:150px;">
+        <div id = LoadingColumn style= " position:absolute; width:400px; height:300px ">  <!--- Loading動畫 --->
+          <div id = bouncingLoader class="bouncingLoader" >
             <div0></div0>
             <div1></div1>
             <div2></div2>
@@ -36,7 +47,7 @@
           </div>
         </div>
 
-        <div id = DataColumn>
+        <div id = dataColumn class="dataColumn">
           <P>
             <h3 id="TorF0"></h3>
             <div id="article0"></div>

@@ -1,4 +1,5 @@
 chrome.browserAction.onClicked.addListener(function(tab) { alert('icon clicked')});
+
 function genericOnClick(info, tab) {
     //根據你點選右鍵的狀況不同，可以得到一些跟內容有關的資訊
     //例如 頁面網址，選取的文字，圖片來源，連結的位址
