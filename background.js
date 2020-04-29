@@ -13,7 +13,7 @@ function genericOnClick(info, tab) {
     chrome.storage.local.set({title: (info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中)
     // 把下面網址換掉
 
-    fetch('https://us-central1-sc-cofacts.cloudfunctions.net/get_replies',
+    fetch('https://us-central1-sc-cofacts.cloudfunctions.net/replies',
     {method: 'POST',body: JSON.stringify({"title":info.selectionText})}).then(r => r.text()).then(result => {
      //Result now contains the response text, do what you want...
 
@@ -44,7 +44,7 @@ function checkableClick(info, tab) {
 
 function createMenus() {
     var parent = chrome.contextMenus.create({
-        "title": "查詢\" %s \"的相關資訊",
+        "title": "search\" %s \"'s information.'",
         "type": "normal", //有這句查詢才能正常運作
         "contexts": ['all'],
         "onclick": genericOnClick
