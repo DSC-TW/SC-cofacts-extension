@@ -1,14 +1,7 @@
 chrome.browserAction.onClicked.addListener(function(tab) { alert('icon clicked')});
-
 function genericOnClick(info, tab) {
     //根據你點選右鍵的狀況不同，可以得到一些跟內容有關的資訊
     //例如 頁面網址，選取的文字，圖片來源，連結的位址
-
-    var status = 0;  //設定是否要清除畫面資料的初值(0不用 1要)
-    chrome.storage.local.set({msgstatus:status});
-
-    (info.selectionText ? console.log("文字選取 == true") : cleardata() )
-
     console.log(
         "ID是：" + info.menuItemId + "\n" +
         "現在的網址是：" + info.pageUrl + "\n" +
@@ -19,9 +12,14 @@ function genericOnClick(info, tab) {
     );
     chrome.storage.local.set({title: (info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中)
     // 把下面網址換掉
-
+        //info.selectionText
     fetch('https://us-central1-sc-cofacts.cloudfunctions.net/replies',
-    {method: 'POST',body: JSON.stringify({"title":info.selectionText})}).then(r => r.text()).then(result => {
+    {method: 'POST',
+        body: JSON.stringify({"title":"hello"}),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(r => r.text()).then(result => {
      //Result now contains the response text, do what you want...
 
         /*console.log(result)
@@ -29,7 +27,7 @@ function genericOnClick(info, tab) {
         chrome.storage.sync.set({msg:result });*/
 
         var resultfix = htmlspecialchars(result); //魔改部分
-        console.log(resultfix) //resultfix
+        console.log(resultfix)
         StringSplite(resultfix);
 
     })
@@ -51,7 +49,7 @@ function checkableClick(info, tab) {
 
 function createMenus() {
     var parent = chrome.contextMenus.create({
-        "title": "search\" %s \"'s information.'",
+        "title": "查詢\" %s \"的相關資訊",
         "type": "normal", //有這句查詢才能正常運作
         "contexts": ['all'],
         "onclick": genericOnClick
@@ -148,6 +146,7 @@ function htmlspecialchars(str)   //單引號替換成雙引號 (Json格式)
 
 
 function StringSplite(resultfix){  //字串分割
+  console.log(resultfix)
   var member = JSON.parse(resultfix);  //json 分割，存到member
   var array = [];
   /*console.log("member.content.length = " + member.content.length);  //測試有多少元素
@@ -179,19 +178,4 @@ function StringSplite(resultfix){  //字串分割
 
   chrome.storage.local.set({msg:array});
   //console.log("StringSplite Finish");
-}
-
-function cleardata(){
-  console.log("文字選取 == false")
-  var array = [];
-  for (i=0 ; i<10 ;i++){
-    array[i] = [];
-    array[i][0] = " "
-    array[i][1] = " "
-    array[i][2] = " "
-  }
-  //console.log("array"+array)
-  chrome.storage.local.set({msgNoSelect:array});
-  var status = 1;  //設定是否要清除畫面資料 (1要)
-  chrome.storage.local.set({msgstatus:status});  //傳遞到popup.js
 }
