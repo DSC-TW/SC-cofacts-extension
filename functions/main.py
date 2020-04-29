@@ -1,27 +1,31 @@
 import json
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import requests
 from utility.constants import url,headers,replies_data
 from flask import abort, request
+from google.cloud import translate_v3
+
+client = translate_v3.TranslationServiceClient()
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
+
+PROJECT_ID = "sc-cofacts"
+LOCATION = "us-central1"
+
 
 def _post_replies_from_api(title):
-    print("title:" + title)
     replies_data['variables']['filter']['moreLikeThis']['like'] = title
     data = json.dumps(replies_data)
     try:
         response = requests.post(url, headers=headers, data=data)
         response.encoding = 'utf8'
-        print(response.status_code)
     except:
-        print('\033[33m Error! \033[0m')
-        return {'status': response.status_code}
+        return  "", response.status_code
     else:
-        print('\033[33m Success! \033[0m')
         json_data = json.loads(response.text)
         json_data = json_data['data']['ListReplies']['edges']
-        return {'status': response.status_code, 'content':_replies_data_process(json_data)}
+        return _replies_data_process(json_data), response.status_code
 
 def _replies_data_process(json_data):
     data = json_data
@@ -34,18 +38,32 @@ def _replies_data_process(json_data):
         output.append({"text": text, "text_type": text_type, "creator": creator, "createdTime": createdTime})
     return output
 
-@app.route('/get_replies', methods=['POST'])
-def post_replies():
+def _translate(to_be_translated_text, target_language_code):
+    test = client.translate_text(
+      parent=client.location_path(PROJECT_ID, LOCATION),
+      mime_type="text/plain",
+      contents=[to_be_translated_text],
+      target_language_code=target_language_code
+    )
+
+    return test.translations[0].translated_text
+
+def replies(request):
     try:
         data = request.get_json()
     except:
-        content = {
-            "status": 406,
-            "message": "No given data",
-        }
-        return content, 406
+        return jsonify(message="No given data"), 406
     else:
-        return str(_post_replies_from_api(data['title'])), 200
+        title = data['title']
+        translated_title = _translate(title, 'zh-TW')
+        body, status_code = _post_replies_from_api(translated_title)
+        
+        for respose in body:
+          english_result = _translate(respose["text"], 'en')
+          respose["text"] = english_result
+
+
+        return jsonify(result=body), status_code
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=4040, debug=False)
