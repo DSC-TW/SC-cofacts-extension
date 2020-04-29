@@ -1,7 +1,13 @@
 chrome.browserAction.onClicked.addListener(function(tab) { alert('icon clicked')});
+
 function genericOnClick(info, tab) {
     //根據你點選右鍵的狀況不同，可以得到一些跟內容有關的資訊
     //例如 頁面網址，選取的文字，圖片來源，連結的位址
+
+    var status = 0;  //設定是否要清除畫面資料的初值(0不用 1要)
+    chrome.storage.local.set({msgstatus:status});
+    (info.selectionText ? console.log("文字選取 == true") : cleardata() )
+
     console.log(
         "ID是：" + info.menuItemId + "\n" +
         "現在的網址是：" + info.pageUrl + "\n" +
@@ -11,8 +17,11 @@ function genericOnClick(info, tab) {
         "現在hover的frame是：" + (info.frameUrl ? info.frameUrl : "") + "\n"
     );
     chrome.storage.local.set({title: (info.selectionText ? info.selectionText : "") }); // 將搜尋關鍵字如標題般呈現 (存到title變數中)
-    // 把下面網址換掉
-        //info.selectionText
+
+
+
+
+
     fetch('https://us-central1-sc-cofacts.cloudfunctions.net/replies',
     {method: 'POST',
         body: JSON.stringify({"title":"hello"}),
@@ -22,13 +31,7 @@ function genericOnClick(info, tab) {
     }).then(r => r.text()).then(result => {
      //Result now contains the response text, do what you want...
 
-        /*console.log(result)
-         //回傳結果用這存
-        chrome.storage.sync.set({msg:result });*/
-
-        var resultfix = htmlspecialchars(result); //魔改部分
-        console.log(resultfix)
-        StringSplite(resultfix);
+        StringSplite(result);  //分割json
 
     })
 }
@@ -47,86 +50,14 @@ function checkableClick(info, tab) {
     );
 }
 
-function createMenus() {
+function createMenus() {   //右鍵 Menu
     var parent = chrome.contextMenus.create({
         "title": "查詢\" %s \"的相關資訊",
         "type": "normal", //有這句查詢才能正常運作
         "contexts": ['all'],
         "onclick": genericOnClick
     });
-
-    /*
-    var normal = chrome.contextMenus.create({
-        "title": "通常項目",
-        "type": "normal",
-        "contexts": ['all'],
-        "parentId": parent,
-        "onclick": genericOnClick
-    });
-
-    var checkbox = chrome.contextMenus.create({
-        "title": "checkbox",
-        "type": "checkbox",
-        "contexts": ['all'],
-        "parentId": parent,
-        "onclick": checkableClick
-    });
-
-    //被separator分隔的radio項目會自動形成一個只能單選的group
-    var line1 = chrome.contextMenus.create({
-        "title": "Child 2",
-        "type": "separator",
-        "contexts": ['all'],
-        "parentId": parent
-    });
-
-    var radio1A = chrome.contextMenus.create({
-        "title": "group-1 的A選項(單選)",
-        "type": "radio",
-        "contexts": ['all'],
-        "parentId": parent,
-        "onclick": checkableClick
-    });
-    var radio1B = chrome.contextMenus.create({
-        "title": "group-1 的B選項(單選)",
-        "type": "radio",
-        "contexts": ['all'],
-        "parentId": parent,
-        "onclick": checkableClick
-    });
-    //被separator分隔的radio項目會自動形成一個只能單選的group
-    var line2 = chrome.contextMenus.create({
-        "title": "Child 2",
-        "type": "separator",
-        "contexts": ['all'],
-        "parentId": parent
-    });
-
-    var radio2A = chrome.contextMenus.create({
-        "title": "group-2 的A選項(單選)",
-        "type": "radio",
-        "contexts": ['all'],
-        "parentId": parent,
-        "onclick": checkableClick
-    });
-    var radio2B = chrome.contextMenus.create({
-        "title": "group-2 的B選項(單選)",
-        "type": "radio",
-        "contexts": ['all'],
-        "parentId": parent,
-        "onclick": checkableClick
-    });*/
-
-    // 使用chrome.contextMenus.create的方法回傳值是項目的id
     console.log(parent);
-    /*console.log(normal);
-    console.log(checkbox);
-    console.log(line1);
-    console.log(line2);
-    console.log(radio1A);
-    console.log(radio1B);
-    console.log(radio2A);
-    console.log(radio2B);*/
 }
 
 createMenus();
@@ -134,6 +65,7 @@ createMenus();
 
 /* ------ 新增魔改 ---------*/
 
+/* 暫時用不到了
 function htmlspecialchars(str)   //單引號替換成雙引號 (Json格式)
    {
        //str = str.replace(/&/g, '&amp;');
@@ -142,7 +74,7 @@ function htmlspecialchars(str)   //單引號替換成雙引號 (Json格式)
        //str = str.replace(/"/g, '\'');
        str = str.replace(/'/g, '\"');
        return str;
-   }
+   } */
 
 
 function StringSplite(resultfix){  //字串分割
@@ -155,27 +87,36 @@ function StringSplite(resultfix){  //字串分割
   member.content[i].createdTime; //元素時間 */
 
  /* 資料存到Array */
-  for (i=0 ; i<member.content.length ;i++){
+  for (i=0 ; i<member.result.length ;i++){
     array[i] = [];
-    array[i][0] = member.content[i].text;
-    if(member.content[i].text_type == "NOT_RUMOR"){
-      //console.log(i+"NOT_RUMOR");
-      //array[i][1] = member.content[i].text_type;
-      array[i][1] = "事實";
-    }else if (member.content[i].text_type == "OPINIONATED") {
-      //console.log(i+"OPINIONATED");
-      //array[i][1] = member.content[i].text_type;
-      array[i][1] = "有待商榷";
-    }else if (member.content[i].text_type == "RUMOR") {
-      //console.log(i+"RUMOR");
-      //array[i][1] = member.content[i].text_type;
-      array[i][1] = "謠言";
+    array[i][0] = member.result[i].text;
+    if(member.result[i].text_type == "NOT_RUMOR"){
+      //array[i][1] = "事實";
+      array[i][1] = "TRUTH";
+    }else if (member.result[i].text_type == "OPINIONATED") {
+      //array[i][1] = "有待商榷";
+      array[i][1] = "OPINIONATED";
+    }else if (member.result[i].text_type == "RUMOR") {
+      //array[i][1] = "謠言";
+      array[i][1] = "RUMOR";
     }
-    array[i][2] = member.content[i].createdTime;
-    //chrome.storage.sync.set({bool:"123"}); //真假
-    //chrome.storage.sync.set({time:"123"});
+    array[i][2] = member.result[i].createdTime;
   }
 
   chrome.storage.local.set({msg:array});
-  //console.log("StringSplite Finish");
+}
+
+function cleardata(){
+  //console.log("文字選取 == false")
+  var array = [];
+  for (i=0 ; i<10 ;i++){
+    array[i] = [];
+    array[i][0] = " "
+    array[i][1] = " "
+    array[i][2] = " "
+  }
+  //console.log("array"+array)
+  chrome.storage.local.set({msgNoSelect:array});
+  var status = 1;  //設定是否要清除畫面資料 (1要)
+  chrome.storage.local.set({msgstatus:status});  //傳遞到popup.js
 }
