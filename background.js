@@ -24,7 +24,7 @@ function genericOnClick(info, tab) {
 
     fetch('https://us-central1-sc-cofacts.cloudfunctions.net/replies',
     {method: 'POST',
-        body: JSON.stringify({"title":"hello"}),
+        body: JSON.stringify({"title":info.selectionText}),
         headers: {
             'content-type': 'application/json'
         }
