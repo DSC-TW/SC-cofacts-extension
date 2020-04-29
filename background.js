@@ -52,7 +52,7 @@ function checkableClick(info, tab) {
 
 function createMenus() {   //右鍵 Menu
     var parent = chrome.contextMenus.create({
-        "title": "查詢\" %s \"的相關資訊",
+        "title": "search\" %s \"'s information",
         "type": "normal", //有這句查詢才能正常運作
         "contexts": ['all'],
         "onclick": genericOnClick
