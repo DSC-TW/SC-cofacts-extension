@@ -10,6 +10,7 @@ Select the text and click the icon in the upper right corner.
 ![](img/select.gif)
 ![](img/click.gif)
 ## file tree
+```
 .
 ├── README.md
 ├── background.js
@@ -36,7 +37,7 @@ Select the text and click the icon in the upper right corner.
 ├── manifest.json
 ├── popup.html
 └── popup.js
-
+```
 extension:
 增加權限(cros problem):
 在 manifest.json 的 permissions 裡加上網址
