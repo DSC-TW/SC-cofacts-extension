@@ -2,7 +2,7 @@
 How to use?
 1. clone this repo: git clone https://github.com/DSC-TW/SC-cofacts-extension.git
 ![](img/clone.gif)
-2. Go to chrome://extensions/ click load unpack and select the repo.
+2. Go to [chrome://extensions/](chrome://extensions/) click load unpack and select the repo.
 ![](img/extension.gif)
 ![](img/load.gif)
 3. After seeing the icon in the upper right.
